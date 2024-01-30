@@ -1,0 +1,24 @@
+module sr_latch_tb();
+	reg s,r;
+	wire q,qb;
+	integer i;
+
+	sr_latch DUT(s,r,q,qb);
+
+	task ip_sr(k);
+		begin
+		{s,r}=k;
+		end
+	endtask
+
+
+	initial
+		begin
+		for(i=0;i<4;i=i+1)
+			begin
+			{ip_sr}=i;
+			#10;
+			end
+		end
+endmodule
+	

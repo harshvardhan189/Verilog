@@ -1,0 +1,68 @@
+module tff_tb();
+	reg clock,reset,t;
+	wire Q_out,Qb_out;
+
+	tff DUT(clock,reset,t,Q_out,Qb_out);
+
+//	always #10 clock = ~clock;
+	always 
+		begin
+
+		clock = 1'b0;
+		#10 clock =1'b1;
+		#10;
+		end
+
+	task rst();
+		begin
+
+		@(posedge clock)
+		reset = 1'b1;
+
+		@(posedge clock)
+		reset = 1'b0;
+
+		end
+	endtask
+
+	task ip_t(input k);
+		begin
+		@(negedge clock)
+		t=k;
+		end
+	endtask
+	
+	initial
+		begin
+		rst();
+		ip_t(0);
+		ip_t(1);
+		ip_t(0);
+		ip_t(0);
+		ip_t(1);
+		ip_t(1);
+		#10;
+
+		$finish;
+
+		end
+
+		endmodule
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
